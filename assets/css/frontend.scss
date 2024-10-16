@@ -1,0 +1,26 @@
+///
+/// Frontend styles
+///
+
+.svg-icon {
+	display: var( --cfe-icon--display, inline-block );
+	width: var( --cfe-icon--width, var( --cfe-icon--size, 1em ) );
+	height: var( --cfe-icon--height, var( --cfe-icon--size, 1em ) );
+	vertical-align: var( --cfe-icon--vertical-align, baseline );
+	line-height: var( --cfe-icon--line-height, 1 );
+	background-color: var( --cfe-icon--bg-color );
+	color: var( --cfe-icon--text-color, inherit );
+
+	@media ( prefers-color-scheme: dark ) {
+		background-color: var( --cfe-icon--bg-color--dark );
+		color: var( --cfe-icon--text-color--dark, inherit );
+	}
+
+	svg {
+		display: var( --cfe-icon--svg--display, inline-block );
+		fill: var( --cfe-icon--svg--fill, currentColor );
+		width: var( --cfe-icon--svg--width, var( --cfe-icon--size, 1em ) );
+		height: var( --cfe-icon--svg--height, var( --cfe-icon--size, 1em ) );
+		vertical-align: var( --cfe-icon--svg--vertical-align, middle );
+	}
+}
