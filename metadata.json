@@ -1,10 +1,12 @@
 {
-	"author": "Bludiot",
-	"email": "",
-	"website": "",
-	"version": "1.0.0",
-	"releaseDate": "",
-	"license": "",
-	"compatible": "3.15.0",
-	"notes": ""
+	"author"       : "Bludiot",
+	"email"        : "",
+	"website"      : "https://github.com/Bludiot/breadcrumbs",
+	"version"      : "1.0.0",
+	"releaseDate"  : "",
+	"license"      : "",
+	"compatible"   : "3.16.0",
+	"notes"        : "Breadcrumbs navigation with options.",
+	"theme_compat" : [ "configureight" ],
+	"theme_desc"   : "The Breadcrumbs plugin adds customizable, SEO friendly breadcrumb style navigation links to singular and loop pages. Includes an optional sidebar widget."
 }
