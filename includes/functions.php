@@ -855,7 +855,7 @@ function trail() {
 	} elseif ( is_search() ) {
 		$html .= search_crumbs();
 	}
-	$html .= '</nav}>';
+	$html .= '</nav>';
 
 	return $html;
 }
