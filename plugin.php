@@ -16,7 +16,8 @@ if ( ! defined( 'BLUDIT' ) ) {
 
 // Access namespaced functions.
 use function Breadcrumbs\{
-	trail
+	trail,
+	sidebar
 };
 
 class Breadcrumbs extends Plugin {
@@ -82,7 +83,8 @@ class Breadcrumbs extends Plugin {
 			'theme_hook' => 'breadcrumbs',
 			'separator'  => 'angle',
 			'widget'     => false,
-			'label'      => ''
+			'label'      => '',
+			'label_wrap' => 'h2'
 		];
 
 		// Array of custom hooks.
@@ -208,18 +210,7 @@ class Breadcrumbs extends Plugin {
 		if ( ! $this->widget() ) {
 			return false;
 		}
-
-		$html = '<div class="plugin plugin-breadcrumbs">';
-		if ( ! empty( $this->label() ) ) {
-			$html .= sprintf(
-				'<nav>%s</nav>',
-				$this->label()
-			);
-		}
-		$html .= trail();
-		$html .= '</div>';
-
-		return $html;
+		return sidebar();
 	}
 
 	/**
@@ -286,5 +277,10 @@ class Breadcrumbs extends Plugin {
 	// @return string
 	public function label() {
 		return $this->getValue( 'label' );
+	}
+
+	// @return string
+	public function label_wrap() {
+		return $this->getValue( 'label_wrap' );
 	}
 }

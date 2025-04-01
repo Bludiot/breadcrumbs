@@ -444,54 +444,6 @@ function loop_label() {
 }
 
 /**
- * Home crumbs
- *
- * @since  1.0.0
- * @return void
- */
-function home_crumbs() {
-
-	return sprintf(
-		'<span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="%s" itemprop="item">%s</a><meta itemprop="position" content="1" /></span>',
-		site_domain(),
-		lang()->get( 'Home' )
-	);
-}
-
-/**
- * Posts loop crumbs
- *
- * @since  1.0.0
- * @return void
- */
-function loop_crumbs() {
-
-	$html = sprintf(
-		'<span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="%s" itemprop="item">%s</a></span><meta itemprop="position" content="2" />',
-		site_domain(),
-		loop_label()
-	);
-
-	if ( is_static_loop() && is_main_loop() ) {
-		$html = sprintf(
-			'%s %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s</span><meta itemprop="position" content="2" /></span>',
-			home_crumbs(),
-			separator(),
-			loop_label()
-		);
-	} elseif ( is_static_loop() ) {
-		$html = sprintf(
-			'%s %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="%s" itemprop="item">%s</a><meta itemprop="position" content="2" /></span>',
-			home_crumbs(),
-			separator(),
-			static_loop_page()->permalink(),
-			loop_label()
-		);
-	}
-	return $html;
-}
-
-/**
  * Is paged
  *
  * If the content is divided into navigable pages.
@@ -528,6 +480,60 @@ function paged_index() {
 }
 
 /**
+ * Home crumbs
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function home_crumbs() {
+
+	return sprintf(
+		'<span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="%s" itemprop="item">%s</a><meta itemprop="position" content="1" /></span>',
+		site_domain(),
+		lang()->get( 'Home' )
+	);
+}
+
+/**
+ * Posts loop crumbs
+ *
+ * @since  1.0.0
+ * @return void
+ */
+function loop_crumbs( $sep = false ) {
+
+	if ( is_string( $sep ) && ! empty( $sep ) ) {
+		$sep = $sep;
+	} else {
+		$sep = separator();
+	}
+
+	$html = sprintf(
+		'<span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="%s" itemprop="item">%s</a></span><meta itemprop="position" content="2" />',
+		site_domain(),
+		loop_label()
+	);
+
+	if ( is_static_loop() && is_main_loop() ) {
+		$html = sprintf(
+			'%s %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s</span><meta itemprop="position" content="2" /></span>',
+			home_crumbs(),
+			$sep,
+			loop_label()
+		);
+	} elseif ( is_static_loop() ) {
+		$html = sprintf(
+			'%s %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="%s" itemprop="item">%s</a><meta itemprop="position" content="2" /></span>',
+			home_crumbs(),
+			$sep,
+			static_loop_page()->permalink(),
+			loop_label()
+		);
+	}
+	return $html;
+}
+
+/**
  * Post crumbs
  *
  * Non-static breadcrumbs include the loop link.
@@ -535,7 +541,7 @@ function paged_index() {
  * @since  1.0.0
  * @return void
  */
-function post_crumbs() {
+function post_crumbs( $sep = false ) {
 
 	if ( ! is_page() ) {
 		return false;
@@ -545,13 +551,19 @@ function post_crumbs() {
 		return false;
 	}
 
+	if ( is_string( $sep ) && ! empty( $sep ) ) {
+		$sep = $sep;
+	} else {
+		$sep = separator();
+	}
+
 	if ( page()->parent() ) {
 		$html = child_crumbs();
 	} else {
 		$html = sprintf(
 			'%s %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s<meta itemprop="position" content="3" /></span>',
-			loop_crumbs(),
-			separator(),
+			loop_crumbs( $sep ),
+			$sep,
 			page()->title()
 		);
 	}
@@ -566,7 +578,7 @@ function post_crumbs() {
  * @since  1.0.0
  * @return void
  */
-function page_crumbs() {
+function page_crumbs( $sep = false ) {
 
 	if ( ! is_page() ) {
 		return false;
@@ -576,13 +588,19 @@ function page_crumbs() {
 		return false;
 	}
 
+	if ( is_string( $sep ) && ! empty( $sep ) ) {
+		$sep = $sep;
+	} else {
+		$sep = separator();
+	}
+
 	if ( page()->parent() ) {
 		$html = child_crumbs();
 	} else {
 		$html = sprintf(
 			'%s %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s<meta itemprop="position" content="2" /></span>',
 			home_crumbs(),
-			separator(),
+			$sep,
 			page()->title()
 		);
 	}
@@ -595,10 +613,16 @@ function page_crumbs() {
  * @since  1.0.0
  * @return mixed
  */
-function parent_crumbs() {
+function parent_crumbs( $sep = false ) {
 
 	if ( ! is_page() ) {
 		return false;
+	}
+
+	if ( is_string( $sep ) && ! empty( $sep ) ) {
+		$sep = $sep;
+	} else {
+		$sep = separator();
 	}
 
 	$html = '';
@@ -606,15 +630,15 @@ function parent_crumbs() {
 		$html = sprintf(
 			'%s %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="%s" itemprop="item">%s</a><meta itemprop="position" content="2" /></span>',
 			home_crumbs(),
-			separator(),
+			$sep,
 			page()->parentMethod( 'permalink' ),
 			page()->parentMethod( 'title' )
 		);
 	} elseif ( page()->parent() ) {
 		$html = sprintf(
 			'%s %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="%s" itemprop="item">%s</a><meta itemprop="position" content="3" /></span>',
-			loop_crumbs(),
-			separator(),
+			loop_crumbs( $sep ),
+			$sep,
 			page()->parentMethod( 'permalink' ),
 			page()->parentMethod( 'title' )
 		);
@@ -628,7 +652,7 @@ function parent_crumbs() {
  * @since  1.0.0
  * @return mixed
  */
-function child_crumbs() {
+function child_crumbs( $sep = false ) {
 
 	if ( ! is_page() ) {
 		return false;
@@ -638,10 +662,16 @@ function child_crumbs() {
 		return false;
 	}
 
+	if ( is_string( $sep ) && ! empty( $sep ) ) {
+		$sep = $sep;
+	} else {
+		$sep = separator();
+	}
+
 	$html = sprintf(
 		'%s %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s<meta itemprop="position" content="%s" /></span>',
 		parent_crumbs(),
-		separator(),
+		$sep,
 		page()->title(),
 		( 'page' == page_type() ? '3' : '4' )
 	);
@@ -654,10 +684,16 @@ function child_crumbs() {
  * @since  1.0.0
  * @return mixed
  */
-function cat_crumbs() {
+function cat_crumbs( $sep = false ) {
 
 	if ( ! is_cat() ) {
 		return false;
+	}
+
+	if ( is_string( $sep ) && ! empty( $sep ) ) {
+		$sep = $sep;
+	} else {
+		$sep = separator();
 	}
 
 	$html = '';
@@ -667,26 +703,26 @@ function cat_crumbs() {
 	if ( is_paged() && paged_index() > 1 ) {
 		$html = sprintf(
 			'%s %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s<meta itemprop="position" content="%s" /></span> %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="%s" itemprop="item">%s</a><meta itemprop="position" content="%s" /></span> %s <span class="crumb-paged-no" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s<meta itemprop="position" content="%s" /></span>',
-			loop_crumbs(),
-			separator(),
+			loop_crumbs( $sep ),
+			$sep,
 			ucwords( $slug ),
 			( is_static_loop() ? '3' : '2' ),
-			separator(),
+			$sep,
 			$cat->permalink(),
 			$cat->name(),
 			( is_static_loop() ? '4' : '3' ),
-			separator(),
+			$sep,
 			paged_index(),
 			( is_static_loop() ? '5' : '4' )
 		);
 	} else {
 		$html = sprintf(
 			'%s %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s<meta itemprop="position" content="%s" /></span> %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s<meta itemprop="position" content="%s" /></span>',
-			loop_crumbs(),
-			separator(),
+			loop_crumbs( $sep ),
+			$sep,
 			ucwords( $slug ),
 			( is_static_loop() ? '3' : '2' ),
-			separator(),
+			$sep,
 			$cat->name(),
 			( is_static_loop() ? '4' : '3' )
 		);
@@ -700,10 +736,16 @@ function cat_crumbs() {
  * @since  1.0.0
  * @return mixed
  */
-function tag_crumbs() {
+function tag_crumbs( $sep = false ) {
 
 	if ( ! is_tag() ) {
 		return false;
+	}
+
+	if ( is_string( $sep ) && ! empty( $sep ) ) {
+		$sep = $sep;
+	} else {
+		$sep = separator();
 	}
 
 	$html = '';
@@ -713,26 +755,26 @@ function tag_crumbs() {
 	if ( is_paged() && paged_index() > 1 ) {
 		$html = sprintf(
 			'%s %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s<meta itemprop="position" content="%s" /></span> %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem"><a href="%s" itemprop="item">%s</a><meta itemprop="position" content="%s" /></span> %s <span class="crumb-paged-no" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s<meta itemprop="position" content="%s" /></span>',
-			loop_crumbs(),
-			separator(),
+			loop_crumbs( $sep ),
+			$sep,
 			ucwords( $slug ),
 			( is_static_loop() ? '3' : '2' ),
-			separator(),
+			$sep,
 			$tag->permalink(),
 			$tag->name(),
 			( is_static_loop() ? '4' : '3' ),
-			separator(),
+			$sep,
 			paged_index(),
 			( is_static_loop() ? '5' : '4' )
 		);
 	} else {
 		$html = sprintf(
 			'%s %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s<meta itemprop="position" content="%s" /></span> %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s<meta itemprop="position" content="%s" /></span>',
-			loop_crumbs(),
-			separator(),
+			loop_crumbs( $sep ),
+			$sep,
 			ucwords( $slug ),
 			( is_static_loop() ? '3' : '2' ),
-			separator(),
+			$sep,
 			$tag->name(),
 			( is_static_loop() ? '4' : '3' )
 		);
@@ -748,7 +790,7 @@ function tag_crumbs() {
  * @since  1.0.0
  * @return mixed
  */
-function user_crumbs() {
+function user_crumbs( $sep = false ) {
 
 	$profiles = getPlugin( 'User_Profiles' );
 	if ( ! $profiles ) {
@@ -759,12 +801,19 @@ function user_crumbs() {
 	if ( $slug !== url()->whereAmI() ) {
 		return false;
 	}
+
+	if ( is_string( $sep ) && ! empty( $sep ) ) {
+		$sep = $sep;
+	} else {
+		$sep = separator();
+	}
+
 	$html = sprintf(
 		'%s %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s<meta itemprop="position" content="2" /></span> %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s<meta itemprop="position" content="3" /></span>',
 		home_crumbs(),
-		separator(),
+		$sep,
 		ucwords( $slug ),
-		separator(),
+		$sep,
 		user_display_name( user_slug() )
 	);
 	return $html;
@@ -776,16 +825,22 @@ function user_crumbs() {
  * @since  1.0.0
  * @return mixed
  */
-function error_crumbs() {
+function error_crumbs( $sep = false ) {
 
 	if ( ! is_404() ) {
 		return false;
 	}
 
+	if ( is_string( $sep ) && ! empty( $sep ) ) {
+		$sep = $sep;
+	} else {
+		$sep = separator();
+	}
+
 	$html = sprintf(
 		'%s %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s<meta itemprop="position" content="2" /></span>',
 		home_crumbs(),
-		separator(),
+		$sep,
 		lang()->get( 'URL Not Found' )
 	);
 	return $html;
@@ -799,7 +854,7 @@ function error_crumbs() {
  * @since  1.0.0
  * @return mixed
  */
-function search_crumbs() {
+function search_crumbs( $sep = false ) {
 
 	$search = getPlugin( 'Search_Forms' );
 	if ( ! $search ) {
@@ -813,12 +868,18 @@ function search_crumbs() {
 		$terms = str_replace( '+', ' ', $terms );
 	}
 
+	if ( is_string( $sep ) && ! empty( $sep ) ) {
+		$sep = $sep;
+	} else {
+		$sep = separator();
+	}
+
 	$html = sprintf(
 		'%s %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s<meta itemprop="position" content="2" /></span> %s <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">%s<meta itemprop="position" content="3" /></span>',
 		home_crumbs(),
-		separator(),
+		$sep,
 		lang()->get( 'Search' ),
-		separator(),
+		$sep,
 		$terms
 	);
 	return $html;
@@ -830,32 +891,98 @@ function search_crumbs() {
  * @since  1.0.0
  * @return mixed
  */
-function trail() {
+function trail( $sep = false ) {
 
 	if ( is_home() || is_front_page() ) {
 		return false;
 	}
 
+	if ( is_string( $sep ) && ! empty( $sep ) ) {
+		$sep = $sep;
+	} else {
+		$sep = separator();
+	}
+
 	$html = '<nav class="breadcrumbs-nav" itemscope itemtype="https://schema.org/BreadcrumbList">';
 
 	if ( is_404() ) {
-		$html .= error_crumbs();
+		$html .= error_crumbs( $sep );
 	} elseif ( is_main_loop() ) {
-		$html .= loop_crumbs();
+		$html .= loop_crumbs( $sep );
 	} elseif ( is_cat() ) {
-		$html .= cat_crumbs();
+		$html .= cat_crumbs( $sep );
 	} elseif ( is_tag() ) {
-		$html .= tag_crumbs();
+		$html .= tag_crumbs( $sep );
 	} elseif ( is_profile() ) {
-		$html .= user_crumbs();
+		$html .= user_crumbs( $sep );
 	} elseif ( is_page() && 'page' == page_type() ) {
-		$html .= page_crumbs();
+		$html .= page_crumbs( $sep );
 	} elseif ( is_page() ) {
-		$html .= post_crumbs();
+		$html .= post_crumbs( $sep );
 	} elseif ( is_search() ) {
-		$html .= search_crumbs();
+		$html .= search_crumbs( $sep );
 	}
 	$html .= '</nav>';
 
 	return $html;
+}
+
+/**
+ * Site sidebar
+ *
+ * @since 1.0.0
+ * @return string
+ */
+function sidebar() {
+
+	// Label wrapping elements.
+	$get_open  = str_replace( ',', '><', plugin()->label_wrap() );
+	$get_close = str_replace( ',', '></', plugin()->label_wrap() );
+
+	$label_el_open  = "<{$get_open}>";
+	$label_el_close = "</{$get_close}>";
+
+	$html = '<div class="plugin plugin-breadcrumbs">';
+	if ( ! empty( plugin()->label() ) && ! ctype_space( plugin()->label() ) ) {
+		$html .= $label_el_open;
+		$html .= plugin()->label();
+		$html .= $label_el_close;
+	}
+	$html .= trail();
+	$html .= '</div>';
+
+	return $html;
+}
+
+/**
+ * Breadcrumbs functions
+ *
+ * @since 1.0.0
+ * @return array
+ */
+function crumbs_list() {
+
+	return [
+		'trail'         => lang()->get( 'Automatic Breadcrumbs' ),
+		'loop_crumbs'   => lang()->get( 'Blog Pages' ),
+		'cat_crumbs'    => lang()->get( 'Category Pages' ),
+		'tag_crumbs'    => lang()->get( 'Tag Pages' ),
+		'post_crumbs'   => lang()->get( 'Post Pages' ),
+		'page_crumbs'   => lang()->get( 'Static Pages' ),
+		'user_crumbs'   => lang()->get( 'Profile Pages' ),
+		'search_crumbs' => lang()->get( 'Search Results' ),
+		'error_crumbs'  => lang()->get( '404 Error Page' )
+	];
+}
+
+/**
+ * Compatible themes
+ *
+ * @since 1.0.0
+ * @return array
+ */
+function themes_compat() {
+	return [
+		'configureight'
+	];
 }

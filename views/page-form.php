@@ -11,13 +11,38 @@
 // Access namespaced functions.
 use function Breadcrumbs\{
 	plugin,
-	lang
+	lang,
+	trail
 };
 
 // Guide page URL.
 $guide_page = DOMAIN_ADMIN . 'plugin/Breadcrumbs';
 
 ?>
+<style>
+.form-control-has-button {
+	display: flex;
+	align-items: center;
+	flex-wrap: nowrap;
+	gap: 0.25em;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+.screen-reader-text {
+	border: 0;
+	clip: rect( 1px, 1px, 1px, 1px );
+	-webkit-clip-path: inset(50%);
+	        clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute !important;
+	width: 1px;
+	word-wrap: normal !important;
+}
+</style>
 <div class="alert alert-primary alert-cats-list" role="alert">
 	<p class="m-0"><?php lang()->p( "Go to the <a href='{$guide_page}'>breadcrumbs guide</a> page." ); ?></p>
 </div>
@@ -77,6 +102,17 @@ $guide_page = DOMAIN_ADMIN . 'plugin/Breadcrumbs';
 				<div class="col-sm-10">
 					<input type="text" id="label" name="label" value="<?php echo $this->label(); ?>" placeholder="<?php echo $this->dbFields['label']; ?>" />
 					<small class="form-text"><?php lang()->p( 'The text for the widget label. Leave blank for no label.' ); ?></small>
+				</div>
+			</div>
+
+			<div class="form-field form-group row">
+				<label class="form-label col-sm-2 col-form-label" for="label_wrap"><?php lang()->p( 'Label Wrap' ); ?></label>
+				<div class="col-sm-10">
+					<div class="form-control-has-button">
+						<input type="text" id="label_wrap" name="label_wrap" value="<?php echo $this->getValue( 'label_wrap' ); ?>" placeholder="<?php lang()->p( 'h2' ); ?>" />
+						<span class="btn btn-secondary btn-md button hide-if-no-js" onClick="$('#label_wrap').val('<?php echo $this->dbFields['label_wrap']; ?>');"><?php lang()->p( 'Default' ); ?></span>
+					</div>
+					<small class="form-text text-muted"><?php lang()->p( 'Wrap the label in an element, such as a heading. Accepts HTML tags without brackets (e.g. h3), and comma-separated tags (e.g. span,strong,em). Save as blank for no wrapping element.' ); ?></small>
 				</div>
 			</div>
 		</div>
