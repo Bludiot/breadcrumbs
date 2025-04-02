@@ -53,7 +53,7 @@ $guide_page = DOMAIN_ADMIN . 'plugin/Breadcrumbs';
 		<div class="form-field form-group row">
 			<label class="form-label col-sm-2 col-form-label" for="theme_hook"><?php lang()->p( 'Theme Hook' ); ?></label>
 			<div class="col-sm-10">
-				<select class="form-select" id="theme_hook" name="theme_hook">
+				<select id="theme_hook" class="form-select" name="theme_hook">
 
 					<option value="breadcrumbs" <?php echo ( $this->theme_hook() === 'breadcrumbs' ? 'selected' : '' ); ?>>breadcrumbs</option>
 
@@ -70,7 +70,7 @@ $guide_page = DOMAIN_ADMIN . 'plugin/Breadcrumbs';
 		<div class="form-field form-group row">
 			<label class="form-label col-sm-2 col-form-label" for="separator"><?php lang()->p( 'Links Separator' ); ?></label>
 			<div class="col-sm-10">
-				<select class="form-select" id="separator" name="separator">
+				<select id="separator" class="form-select" name="separator">
 
 					<option value="angle" <?php echo ( $this->separator() === 'angle' ? 'selected' : '' ); ?>><?php lang()->p( 'Angle' ); ?></option>
 
@@ -85,7 +85,7 @@ $guide_page = DOMAIN_ADMIN . 'plugin/Breadcrumbs';
 		<div class="form-field form-group row">
 			<label class="form-label col-sm-2 col-form-label" for="widget"><?php lang()->p( 'Sidebar Widget' ); ?></label>
 			<div class="col-sm-10">
-				<select class="form-select" id="widget" name="widget">
+				<select id="widget" class="form-select" name="widget">
 
 					<option value="true" <?php echo ( $this->widget() === true ? 'selected' : '' ); ?>><?php lang()->p( 'Enabled' ); ?></option>
 
