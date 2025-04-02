@@ -117,37 +117,6 @@ class Breadcrumbs extends Plugin {
 	}
 
 	/**
-	 * Admin scripts & styles
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @global object $url Url class.
-	 * @return string Returns the head content.
-	 */
-	public function adminHead() {
-
-		// Access global variables.
-		global $url;
-
-		// Maybe get non-minified assets.
-		$suffix = '.min';
-		if ( defined( 'DEBUG_MODE' ) && DEBUG_MODE ) {
-			$suffix = '';
-		}
-		$assets = '';
-
-		// Load only for this plugin's pages.
-		if ( str_contains( $url->slug(), $this->className() ) ) :
-
-			$assets .= '<script type="text/javascript" src="' . $this->domainPath() . "assets/js/backend{$suffix}.js?version=" . $this->getMetadata( 'version' ) . '"></script>' . PHP_EOL;
-
-			$assets .= '<link rel="stylesheet" type="text/css" href="' . $this->domainPath() . "assets/css/backend{$suffix}css?version=" . $this->getMetadata( 'version' ) . '" />' . PHP_EOL;
-		endif;
-
-		return $assets;
-	}
-
-	/**
 	 * Admin info pages
 	 *
 	 * @since  1.0.0
@@ -188,9 +157,6 @@ class Breadcrumbs extends Plugin {
 			$suffix = '';
 		}
 		$assets = '';
-
-		$assets .= '<script type="text/javascript" src="' . $this->domainPath() . "assets/js/frontend{$suffix}.js?version=" . $this->getMetadata( 'version' ) . '"></script>' . PHP_EOL;
-
 		$assets .= '<link rel="stylesheet" type="text/css" href="' . $this->domainPath() . "assets/css/frontend{$suffix}.css?version=" . $this->getMetadata( 'version' ) . '" />' . PHP_EOL;
 
 		return $assets;
@@ -207,10 +173,10 @@ class Breadcrumbs extends Plugin {
 	 */
 	public function siteSidebar() {
 
-		if ( ! $this->widget() ) {
-			return false;
+		if ( $this->widget() ) {
+			return sidebar();
 		}
-		return sidebar();
+		return false;
 	}
 
 	/**

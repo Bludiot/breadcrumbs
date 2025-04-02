@@ -22,15 +22,15 @@ $form_page = DOMAIN_ADMIN . 'configure-plugin/Breadcrumbs';
 // Plugin hooks by version.
 if ( function_exists( 'execPluginsByHook' ) ) {
 	$hook = [
-		'plugin' => "execPluginsByHook( 'breadcrumbs' );",
-		'begin'  => "execPluginsByHook( 'pageBegin' );",
-		'end'    => "execPluginsByHook( 'pageEnd' );"
+		'plugin' => "execPluginsByHook( 'breadcrumbs' )",
+		'begin'  => "execPluginsByHook( 'pageBegin' )",
+		'end'    => "execPluginsByHook( 'pageEnd' )"
 	];
 } else {
 	$hook = [
-		'plugin' => "Theme::plugins( 'breadcrumbs' );",
-		'begin'  => "Theme::plugins( 'pageBegin' );",
-		'end'    => "Theme::plugins( 'pageEnd' );"
+		'plugin' => "Theme::plugins( 'breadcrumbs' )",
+		'begin'  => "Theme::plugins( 'pageBegin' )",
+		'end'    => "Theme::plugins( 'pageEnd' )"
 	];
 }
 
@@ -65,13 +65,13 @@ if ( in_array( site()->theme(), themes_compat() ) ) {
 
 <p><?php $L->p( "As long as the Breadcrumbs plugin is active, various template tag functions are available to use in custom page templates. In case the plugin is deactivated it is best to wrap the template tags in <code>if ( getPlugin( 'Breadcrumbs' ) { ... }</code> to prevent your website breaking." ); ?></p>
 
-<p><?php $L->p( "Following is a list of template tags available. All tags must be echoed to print the result. Also, all tags accept a string parameter for custom separators (e.g. <code>trail( '&raquo;' );</code> )." ); ?></p>
+<p><?php $L->p( "Following is a list of template tags available. All tags must be echoed to print the result. Also, all tags accept a string parameter for custom separators (e.g. <code>trail( '&raquo;' )</code> )." ); ?></p>
 
 <ul>
 <?php
 foreach ( crumbs_list() as $function => $location ) {
 	printf(
-		'<li><code class="select">Breadcrumbs\\%s();</code> %s %s</li>',
+		'<li><code class="select">Breadcrumbs\\%s()</code> %s %s</li>',
 		$function,
 		lang()->get( 'for' ),
 		$location

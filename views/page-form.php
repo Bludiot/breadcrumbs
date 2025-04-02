@@ -72,11 +72,11 @@ $guide_page = DOMAIN_ADMIN . 'plugin/Breadcrumbs';
 			<div class="col-sm-10">
 				<select class="form-select" id="separator" name="separator">
 
-					<option value="arrow" <?php echo ( $this->separator() === 'arrow' ? 'selected' : '' ); ?>><?php lang()->p( 'Arrow' ); ?></option>
-
 					<option value="angle" <?php echo ( $this->separator() === 'angle' ? 'selected' : '' ); ?>><?php lang()->p( 'Angle' ); ?></option>
 
 					<option value="angles" <?php echo ( $this->separator() === 'angles' ? 'selected' : '' ); ?>><?php lang()->p( 'Double Angle' ); ?></option>
+
+					<option value="arrow" <?php echo ( $this->separator() === 'arrow' ? 'selected' : '' ); ?>><?php lang()->p( 'Arrow' ); ?></option>
 				</select>
 				<small class="form-text"><?php lang()->p( 'The icon to display between breadcrumb links.' ); ?></small>
 			</div>

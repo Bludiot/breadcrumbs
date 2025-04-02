@@ -957,6 +957,8 @@ function sidebar() {
 /**
  * Breadcrumbs functions
  *
+ * Used for the plugin guide page.
+ *
  * @since 1.0.0
  * @return array
  */
@@ -977,6 +979,8 @@ function crumbs_list() {
 
 /**
  * Compatible themes
+ *
+ * Hand curated list. No guarantee of completeness.
  *
  * @since 1.0.0
  * @return array
