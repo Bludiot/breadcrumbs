@@ -16,7 +16,7 @@ use function Breadcrumbs\{
 };
 
 // Guide page URL.
-$guide_page = DOMAIN_ADMIN . 'plugin/Breadcrumbs';
+$guide_page = DOMAIN_ADMIN . 'plugin/' . $this->className();
 
 ?>
 <style>

@@ -17,7 +17,7 @@ use function Breadcrumbs\{
 };
 
 // Form page URL.
-$form_page = DOMAIN_ADMIN . 'configure-plugin/Breadcrumbs';
+$form_page = DOMAIN_ADMIN . 'configure-plugin/' . $this->className();
 
 // Plugin hooks by version.
 if ( function_exists( 'execPluginsByHook' ) ) {
